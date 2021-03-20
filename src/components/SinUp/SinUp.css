@@ -1,0 +1,9 @@
+.loginPage {
+  text-align: center;
+}
+.loginBox {
+  /* width: 400px;
+  padding: 40px;
+  height: 510px; */
+  border: 1px solid gray;
+}

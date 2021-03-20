@@ -1,0 +1,20 @@
+.vCard {
+  margin: 30px;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 40px;
+  text-align: center;
+  border: 0px solid rebeccapurple;
+  border-radius: 20px;
+  background-color: rgb(252, 248, 242);
+}
+.vCard:hover {
+  background-color: turquoise;
+}
+.cardImg {
+  height: 100px;
+  width: 140px;
+}
+.cardName {
+  padding: 10px;
+}

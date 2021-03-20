@@ -1,0 +1,114 @@
+import React, { useContext } from "react";
+import NavBar from "../NavBar/NavBar";
+import "./LogIn.css";
+import TextField from "@material-ui/core/TextField";
+import Checkbox from "@material-ui/core/Checkbox";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import { Button, Grid } from "@material-ui/core";
+
+import firebase from "firebase/app";
+import "firebase/auth";
+import firebaseConfig from "../../firebase.config";
+import { UserContext } from "../../App";
+import { useHistory, useLocation } from "react-router";
+
+const LogIn = () => {
+  const [state, setState] = React.useState({
+    checkedB: true,
+  });
+
+  const handleChange = (event) => {
+    setState({ ...state, [event.target.name]: event.target.checked });
+  };
+  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+
+  const history = useHistory();
+  const location = useLocation();
+
+  const { from } = location.state || { from: { pathname: "/" } };
+
+  const handleGoogleSinUp = () => {
+    var provider = new firebase.auth.GoogleAuthProvider();
+    firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then((result) => {
+        var credential = result.credential;
+        var token = credential.accessToken;
+        var user = result.user;
+
+        const { displayName, email } = result.user;
+        const sinedInUser = { name: displayName, email };
+        console.log("Hi", sinedInUser);
+        setLoggedInUser(sinedInUser);
+        history.replace(from);
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        var email = error.email;
+        var credential = error.credential;
+      });
+  };
+  return (
+    <div className="loginPage">
+      <NavBar></NavBar>
+      <div className="container">
+        <div className="sininBox col-5 mx-auto p-5">
+          <h4 style={{ textAlign: "left" }}>Login</h4>
+          <TextField
+            style={{ marginTop: "30px" }}
+            id="standard-basic"
+            label="Email"
+            fullWidth
+          />
+          <TextField
+            style={{ marginTop: "30px" }}
+            id="standard-basic"
+            type="password"
+            label="Password"
+            fullWidth
+          />
+          <Grid container>
+            <Grid xl={6}>
+              <FormControlLabel
+                style={{ float: "left", marginTop: "20px" }}
+                control={
+                  <Checkbox
+                    checked={state.checkedB}
+                    onChange={handleChange}
+                    name="checkedB"
+                    color="primary"
+                  />
+                }
+                label="Remember Me"
+              />
+            </Grid>
+            {/* <Grid xl={6}>
+              <a style={{ paddingTop: "40px" }} href="">
+                Forgot Password
+              </a>
+            </Grid> */}
+          </Grid>
+
+          <Button fullWidth variant="contained" color="secondary">
+            Login
+          </Button>
+          <p>
+            Do you have an account?<a href="sinup">Create an account.</a>
+          </p>
+        </div>
+        <p>__________________or_________________</p>
+        <br />
+        <Button onClick={handleGoogleSinUp} variant="contained" color="primary">
+          Sin Up With Google
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+export default LogIn;
