@@ -55,6 +55,9 @@ const SinUp = () => {
         .then((userCredential) => {
           var user = userCredential.user;
           console.log(user);
+          document.getElementById(
+            "message"
+          ).innerHTML = `<p style={{color: 'green'}}> Account created successfully, go to login page and login then select your veichle</p>`;
         })
         .catch((error) => {
           var errorCode = error.code;
@@ -115,6 +118,7 @@ const SinUp = () => {
           </form>
         </div>
         <br />
+        <div id="message"></div>
         <Button onClick={handleGoogleSinUp} variant="contained" color="primary">
           Sin Up With Google
         </Button>

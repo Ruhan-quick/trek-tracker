@@ -99,11 +99,18 @@ const LogIn = () => {
           console.log("Hi", sinedInUser);
           setLoggedInUser(sinedInUser);
           history.replace(from);
+
+          // document.getElementById(
+          //   "message"
+          // ).innerHTML = `<p style={{color: 'green'}}> Logged in successfully</p>`;
         })
         .catch((error) => {
           var errorCode = error.code;
           var errorMessage = error.message;
           console.log(errorCode, errorMessage);
+          // document.getElementById(
+          //   "message"
+          // ).innerHTML = `<p style={{color: 'red'}}> Logged in Failed! Email or password or both doesnt match. Try again</p>`;
         });
     }
     e.preventDefault();
@@ -163,6 +170,7 @@ const LogIn = () => {
             Do you have an account?<a href="sinup">Create an account.</a>
           </p>
         </div>
+        <div id="message"></div>
         <p>__________________or_________________</p>
         <br />
         <Button onClick={handleGoogleSinUp} variant="contained" color="primary">
