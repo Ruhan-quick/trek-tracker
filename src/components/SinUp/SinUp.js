@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import NavBar from "../NavBar/NavBar";
 import "./SinUp.css";
 import TextField from "@material-ui/core/TextField";
@@ -37,6 +37,33 @@ const SinUp = () => {
         var credential = error.credential;
       });
   };
+
+  let [uemail, setUemail] = useState();
+  let [upassword, setUpassword] = useState();
+
+  const handleSignUp = (e) => {
+    uemail = document.getElementById("t2").value;
+    setUemail(uemail);
+    upassword = document.getElementById("t3").value;
+    setUpassword(upassword);
+    //console.log(uemail, upassword);
+
+    if (uemail && upassword) {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(uemail, upassword)
+        .then((userCredential) => {
+          var user = userCredential.user;
+          console.log(user);
+        })
+        .catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          console.log(errorCode, errorMessage);
+        });
+    }
+    e.preventDefault();
+  };
   return (
     <div className="loginPage">
       <NavBar></NavBar>
@@ -46,19 +73,21 @@ const SinUp = () => {
             <h4 style={{ textAlign: "left" }}>SinUp</h4>
             <TextField
               style={{ marginTop: "30px" }}
-              id="standard-basic"
+              id="t1"
+              type="text"
               label="Name"
               fullWidth
             />
             <TextField
               style={{ marginTop: "30px" }}
-              id="standard-basic"
+              id="t2"
+              type="email"
               label="Username or Email"
               fullWidth
             />
             <TextField
               style={{ marginTop: "30px" }}
-              id="standard-basic"
+              id="t3"
               type="password"
               label="Password"
               fullWidth
@@ -66,12 +95,17 @@ const SinUp = () => {
             />
             <TextField
               style={{ marginTop: "30px", marginBottom: "20px" }}
-              id="standard-basic"
+              id="t4"
               type="password"
               label="Conform Password"
               fullWidth
             />
-            <Button fullWidth variant="contained" color="secondary">
+            <Button
+              onClick={handleSignUp}
+              fullWidth
+              variant="contained"
+              color="secondary"
+            >
               Sin Up
             </Button>
             <br />

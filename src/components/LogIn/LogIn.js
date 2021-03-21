@@ -90,24 +90,20 @@ const LogIn = () => {
     if (uemail && upassword) {
       firebase
         .auth()
-        .createUserWithEmailAndPassword(uemail, upassword)
+        .signInWithEmailAndPassword(uemail, upassword)
         .then((userCredential) => {
-          // Signed in
           var user = userCredential.user;
-          console.log(user);
 
           const { displayName, email } = user;
-          const sinedInUser = { name: displayName, email };
-          //console.log("Hi", sinedInUser);
+          const sinedInUser = { name: "Ruhan", email };
+          console.log("Hi", sinedInUser);
           setLoggedInUser(sinedInUser);
           history.replace(from);
-          // ...
         })
         .catch((error) => {
           var errorCode = error.code;
           var errorMessage = error.message;
           console.log(errorCode, errorMessage);
-          // ..
         });
     }
     e.preventDefault();
