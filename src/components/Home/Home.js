@@ -21,8 +21,7 @@ const Home = () => {
             <VeichleCard
               className="col-lg-3 col-sm-12"
               key={vl.vId}
-              vName={vl.vName}
-              vImage={vl.vImage}
+              vl={vl}
             ></VeichleCard>
           ))}
         </div>

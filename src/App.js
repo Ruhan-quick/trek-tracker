@@ -10,34 +10,41 @@ import { ThemeConsumer } from "react-bootstrap/esm/ThemeProvider";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 
 export const UserContext = createContext();
+export const UserVeichleContext = createContext();
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState({});
+  const [selectedVeichle, setSelectedVeichle] = useState("");
+
   return (
     <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
-      {/* <p>Name: {loggedInUser.name}</p> */}
-      <Router>
-        <Switch>
-          <Route path="/home">
-            <Home></Home>
-          </Route>
-          <Route exact path="/">
-            <Home></Home>
-          </Route>
-          <Route path="/login">
-            <LogIn></LogIn>
-          </Route>
-          <Route path="/sinup">
-            <SinUp></SinUp>
-          </Route>
-          <PrivateRoute path="/:vn">
-            <RouteMap></RouteMap>
-          </PrivateRoute>
-          <Route path="/destination">
-            <RouteMap></RouteMap>
-          </Route>
-        </Switch>
-      </Router>
+      <UserVeichleContext.Provider
+        value={[selectedVeichle, setSelectedVeichle]}
+      >
+        {/* <p>Name: {loggedInUser.name}</p> */}
+        <Router>
+          <Switch>
+            <Route path="/home">
+              <Home></Home>
+            </Route>
+            <Route exact path="/">
+              <Home></Home>
+            </Route>
+            <Route path="/login">
+              <LogIn></LogIn>
+            </Route>
+            <Route path="/sinup">
+              <SinUp></SinUp>
+            </Route>
+            <PrivateRoute path="/:vn">
+              <RouteMap></RouteMap>
+            </PrivateRoute>
+            <Route path="/destination">
+              <RouteMap></RouteMap>
+            </Route>
+          </Switch>
+        </Router>
+      </UserVeichleContext.Provider>
     </UserContext.Provider>
   );
 }

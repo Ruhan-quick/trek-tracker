@@ -53,6 +53,31 @@ const LogIn = () => {
         var credential = error.credential;
       });
   };
+
+  const handleFacebookSinUp = () => {
+    const fbProvider = new firebase.auth.FacebookAuthProvider();
+    firebase
+      .auth()
+      .signInWithPopup(fbProvider)
+      .then((result) => {
+        var credential = result.credential;
+        var user = result.user;
+        var accessToken = credential.accessToken;
+
+        const { displayName, email } = result.user;
+        const sinedInUser = { name: displayName, email };
+        console.log("Hi", sinedInUser);
+        setLoggedInUser(sinedInUser);
+        history.replace(from);
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        var email = error.email;
+        var credential = error.credential;
+      });
+  };
+
   return (
     <div className="loginPage">
       <NavBar></NavBar>
@@ -104,7 +129,16 @@ const LogIn = () => {
         <p>__________________or_________________</p>
         <br />
         <Button onClick={handleGoogleSinUp} variant="contained" color="primary">
-          Sin Up With Google
+          Login With Google
+        </Button>
+        <br />
+        <br />
+        <Button
+          onClick={handleFacebookSinUp}
+          variant="contained"
+          color="primary"
+        >
+          Login with facebook
         </Button>
       </div>
     </div>
