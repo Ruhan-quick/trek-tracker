@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import NavBar from "../NavBar/NavBar";
 import "./LogIn.css";
 import TextField from "@material-ui/core/TextField";
@@ -78,6 +78,41 @@ const LogIn = () => {
       });
   };
 
+  let [uemail, setUemail] = useState();
+  let [upassword, setUpassword] = useState();
+  const handleLogin = (e) => {
+    uemail = document.getElementById("t1").value;
+    setUemail(uemail);
+    upassword = document.getElementById("t2").value;
+    setUpassword(upassword);
+    //console.log(uemail, upassword);
+
+    if (uemail && upassword) {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(uemail, upassword)
+        .then((userCredential) => {
+          // Signed in
+          var user = userCredential.user;
+          console.log(user);
+
+          const { displayName, email } = user;
+          const sinedInUser = { name: displayName, email };
+          //console.log("Hi", sinedInUser);
+          setLoggedInUser(sinedInUser);
+          history.replace(from);
+          // ...
+        })
+        .catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          console.log(errorCode, errorMessage);
+          // ..
+        });
+    }
+    e.preventDefault();
+  };
+
   return (
     <div className="loginPage">
       <NavBar></NavBar>
@@ -86,13 +121,14 @@ const LogIn = () => {
           <h4 style={{ textAlign: "left" }}>Login</h4>
           <TextField
             style={{ marginTop: "30px" }}
-            id="standard-basic"
+            id="t1"
+            type="email"
             label="Email"
             fullWidth
           />
           <TextField
             style={{ marginTop: "30px" }}
-            id="standard-basic"
+            id="t2"
             type="password"
             label="Password"
             fullWidth
@@ -119,7 +155,12 @@ const LogIn = () => {
             </Grid> */}
           </Grid>
 
-          <Button fullWidth variant="contained" color="secondary">
+          <Button
+            onClick={handleLogin}
+            fullWidth
+            variant="contained"
+            color="secondary"
+          >
             Login
           </Button>
           <p>

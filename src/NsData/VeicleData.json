@@ -10,15 +10,15 @@
 	{
 		"vId": 2,
 		"vName": "CAR",
-		"vImage": "https://i.ibb.co/7XXvhXs/Frame-1.png",
+		"vImage": "https://i.ibb.co/5hLC6c1/Frame-2.png",
 		"vCapacity": 5,
 		"vRent": 174,
 		"vAvailability": 4
 	},
 	{
 		"vId": 3,
-		"vName": "BAS",
-		"vImage": "https://i.ibb.co/5hLC6c1/Frame-2.png",
+		"vName": "BUS",
+		"vImage": "https://i.ibb.co/7XXvhXs/Frame-1.png",
 		"vCapacity": 10,
 		"vRent": 122,
 		"vAvailability": 6
