@@ -14,7 +14,7 @@ export const UserVeichleContext = createContext();
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState({});
-  const [selectedVeichle, setSelectedVeichle] = useState("");
+  const [selectedVeichle, setSelectedVeichle] = useState({});
 
   return (
     <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
